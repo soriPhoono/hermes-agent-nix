@@ -5,6 +5,7 @@
     inputs.flake-file.flakeModules.auto-follow
 
     ./inputs.nix
+    ./checks.nix
 
     # Add your nix expression here for import
   ];
