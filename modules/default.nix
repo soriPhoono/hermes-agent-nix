@@ -6,6 +6,7 @@
     ./inputs.nix
     ./checks.nix
     ./checks-nixos.nix
+    ./checks-hm.nix
 
     # Add your nix expression here for import
   ];

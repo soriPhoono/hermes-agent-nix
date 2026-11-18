@@ -9,20 +9,7 @@
     {
       checks.nixos-profiles = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
         let
-          fakeCli = pkgs.runCommand "fake-hermes-cli" { } ''
-            mkdir -p $out/hermes_cli
-            touch $out/hermes_cli/__init__.py
-            echo 'DEFAULT_CONFIG = {"_config_version": 1}' > $out/hermes_cli/config_defaults.py
-          '';
-          venv = pkgs.writeShellScriptBin "python3" ''
-            export PYTHONPATH=${fakeCli}
-            exec ${pkgs.python3}/bin/python3 "$@"
-          '';
-          stub = (pkgs.writeShellScriptBin "hermes" "exec sleep infinity").overrideAttrs (old: {
-            passthru = (old.passthru or { }) // {
-              hermesVenv = venv;
-            };
-          });
+          stub = import ./_lib/stubPackage.nix { inherit pkgs; };
           skill = pkgs.writeTextDir "SKILL.md" "---\nname: demo\ndescription: demo\n---\n";
         in
         pkgs.testers.runNixOSTest {
