@@ -5,6 +5,7 @@
 
     ./inputs.nix
     ./checks.nix
+    ./checks-nixos.nix
 
     # Add your nix expression here for import
   ];
@@ -14,11 +15,11 @@
   flake = {
     nixosModules = rec {
       default = hermes;
-      hermes = import ./nixosModule.nix;
+      hermes = import ./nixosModule.nix inputs;
     };
     homeManagerModules = rec {
       default = hermes;
-      hermes = import ./homeManagerModule.nix;
+      hermes = import ./homeManagerModule.nix inputs;
     };
   };
 }
